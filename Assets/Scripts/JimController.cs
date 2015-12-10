@@ -21,8 +21,40 @@ namespace JimRunner
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-        private bool m_Grounded;            // Whether or not the player is grounded.
-        private bool doubleJump;
+
+        private bool _grounded;
+        private bool Grounded            // Whether or not the player is grounded.
+        {
+            get
+            {
+                return _grounded;
+            }
+            set
+            {
+                if (value != _grounded)
+                {
+                    if (value && JumpCounter != 0)
+                        JumpCounter = 0;
+                    _grounded = value;
+                }
+            }
+        }
+
+        [SerializeField]
+        private int jumpCount = 1;
+
+        private int jumpCounter = 0;
+        private int JumpCounter
+        {
+            get
+            {
+                return jumpCounter;
+            }
+            set
+            {
+                jumpCounter = value;
+            }
+        }
 
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
@@ -42,17 +74,26 @@ namespace JimRunner
 
         private void FixedUpdate()
         {
-            m_Grounded = false;
+            //Grounded = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+
+            if (colliders.Length == 0)
+                Grounded = false;
+
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].gameObject != gameObject)
-                    m_Grounded = true;
+                {
+                    Grounded = true;
+                    break;
+                }
+                if (i == (colliders.Length - 1))
+                    Grounded = false;
             }
-            m_Anim.SetBool("Ground", m_Grounded);
+            m_Anim.SetBool("Ground", Grounded);
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
@@ -75,7 +116,7 @@ namespace JimRunner
             m_Anim.SetBool("Crouch", crouch);
 
             //only control the player if grounded or airControl is turned on
-            if (m_Grounded || m_AirControl)
+            if (Grounded || m_AirControl)
             {
                 // Reduce the speed if crouching by the crouchSpeed multiplier
                 m_Speed = (crouch ? m_Speed * m_CrouchSpeed : m_Speed);
@@ -100,12 +141,13 @@ namespace JimRunner
                 }
             }
             // If the player should jump...
-            if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+            if (/*m_Grounded &&*/ jump && (jumpCounter < jumpCount )/*&& m_Anim.GetBool("Ground")*/)
             {
                 // Add a vertical force to the player.
-                m_Grounded = false;
+                //Grounded = false;
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                JumpCounter++;
             }
         }
 
