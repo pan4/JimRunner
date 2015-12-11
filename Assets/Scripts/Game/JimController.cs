@@ -20,7 +20,7 @@ namespace JimRunner
         private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
-        const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+        const float k_GroundedRadius = 0.2f; // Radius of the overlap circle to determine if grounded
 
         private bool _grounded;
         private bool Grounded            // Whether or not the player is grounded.
@@ -33,8 +33,13 @@ namespace JimRunner
             {
                 if (value != _grounded)
                 {
-                    if (value && JumpCounter != 0)
-                        JumpCounter = 0;
+                    if (value )
+                    {
+                        if (JumpCounter != 0)
+                            JumpCounter = 0;
+                                                
+                       // m_Rigidbody2D.velocity = new Vector2(m_Speed * m_MaxSpeed, 0f);
+                    }
                     _grounded = value;
                 }
             }
@@ -71,6 +76,11 @@ namespace JimRunner
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
+        private void Update()
+        {
+            int i = 0;
+            i++;
+        }
 
         private void FixedUpdate()
         {
