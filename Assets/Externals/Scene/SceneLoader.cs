@@ -41,12 +41,13 @@ namespace Scene
 
 		static SceneLoader ()
 		{
-			//_nextScene = typeof ( MainSceneController );
-			//_baseLoadingScene = typeof ( LoadingSceneController );
+            //_nextScene = typeof ( MainSceneController );
+            //_baseLoadingScene = typeof ( LoadingSceneController );
 
-			//_prevScenes = new List <Type> ();
-			//_prevScenes.Add ( typeof ( MainSceneController ) );
-		}
+            //_prevScenes = new List <Type> ();
+            //_prevScenes.Add ( typeof ( MainSceneController ) );
+            _prevScenes = new List<Type>();
+        }
 
 		public static void LoadScene <T> ( bool withLoader = false ) where T:SceneController
 		{
@@ -142,7 +143,7 @@ namespace Scene
 
 		public static void LoadPrevScene ( bool withLoader = false) 
 		{
-			Type prevScene = typeof ( MainSceneController );
+			Type prevScene = typeof ( EndlessSceneController );
 			if ( _prevScenes.Count > 0 )
 			{
 				prevScene = _prevScenes [ _prevScenes.Count - 1 ];

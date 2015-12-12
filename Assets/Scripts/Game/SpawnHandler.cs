@@ -20,18 +20,7 @@ namespace JimRunner
                     Quaternion.identity) as GameObject;
 
                 obj.name = "SpawnedStage";
-            }
-
-            if(other.gameObject.name == "SpawnLocation")
-            {
-                Destroy(other.gameObject.transform.parent.gameObject);
-            }
-
-            if(other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-            {
-                Destroy(other.gameObject);
-            }
-
+            }            
         }
     }
 }
