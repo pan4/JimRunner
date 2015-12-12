@@ -26,6 +26,12 @@ namespace JimRunner
             {
                 Destroy(other.gameObject.transform.parent.gameObject);
             }
+
+            if(other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+            {
+                Destroy(other.gameObject);
+            }
+
         }
     }
 }

@@ -155,9 +155,12 @@ namespace JimRunner
             {
                 // Add a vertical force to the player.
                 //Grounded = false;
-                m_Anim.SetBool("Ground", false);
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-                JumpCounter++;
+                if (JumpCounter != 0 || (Grounded && m_Anim.GetBool("Ground")))
+                {
+                    m_Anim.SetBool("Ground", false);
+                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                    JumpCounter++;
+                }
             }
         }
 

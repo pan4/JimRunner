@@ -5,28 +5,25 @@ namespace JimRunner
 {
     public class StoneController : MonoBehaviour
     {
-
-        Rigidbody2D _rigidbody2D;
         Transform _transform;
-        
+
         [SerializeField]
         float _speed;
 
-        float _rotateSpeed;
+        private float _rotateSpeed;
 
         void Start()
         {
-            Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
-            rigidbody2D.velocity = new Vector2(-_speed, 0f);
-
             _transform = transform;
-
             CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
-            _rotateSpeed = (360 * _speed)/ (2 * Mathf.PI * circleCollider.radius);
+            _rotateSpeed = (360 * _speed) / (2 * Mathf.PI * circleCollider.radius * circleCollider.transform.localScale.x);
+            
         }
 
         private void Update()
         {
+            //Debug.Log(_rotateSpeed);
+            _transform.Translate(new Vector3(-_speed * Time.deltaTime, 0f, 0f), Space.World);
             _transform.Rotate(0f, 0f, _rotateSpeed * Time.deltaTime);
         }
 
