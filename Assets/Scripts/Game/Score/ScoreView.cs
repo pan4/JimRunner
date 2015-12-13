@@ -1,15 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System;
 
-public class ScoreView : MonoBehaviour {
+namespace JimRunner
+{
+    public class ScoreView : MonoBehaviour
+    {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+        [SerializeField]
+        Text _scoreText;
+
+        float _score;
+        
+        private void Start()
+        {
+            _score = 0f;
+        } 
+
+        void Update()
+        {
+            _score += 10 * Time.deltaTime; 
+            _scoreText.text = Math.Round(_score, 0).ToString();
+        }
+    }
 }
