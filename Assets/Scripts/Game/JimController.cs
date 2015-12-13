@@ -67,6 +67,8 @@ namespace JimRunner
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
+        private SpriteRenderer _spriteRenderer;
+
         private void Awake()
         {
             // Setting up references.
@@ -74,12 +76,13 @@ namespace JimRunner
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
         {
-            int i = 0;
-            i++;
+            if (_damaged)
+                OnDamaged();
         }
 
         private void FixedUpdate()
@@ -158,13 +161,13 @@ namespace JimRunner
                 if (JumpCounter != 0 || (Grounded && m_Anim.GetBool("Ground")))
                 {
                     m_Anim.SetBool("Ground", false);
+                    m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0f);
                     m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
                     JumpCounter++;
                 }
             }
         }
-
-
+                
         private void Flip()
         {
             // Switch the way the player is labelled as facing.
@@ -174,6 +177,41 @@ namespace JimRunner
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+
+        private bool _damaged = false;
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("EnemyLayer"))
+            {                
+                _damaged = true;
+            }
+        }
+
+
+        private float _nextBlink = 0;
+        private float _blinkInterval = 0.1f;
+        private const float _blinkCount = 8;
+        private float _blinkCounter = 0;
+        private void OnDamaged()
+        {
+            Color color = _spriteRenderer.color;
+            if (Time.time > _nextBlink)
+            {
+                if (_blinkCounter % 2 == 0)
+                    color.a = color.a * 0.25f;
+                else
+                    color.a = color.a * 4f;
+                _spriteRenderer.color = color;
+                _nextBlink = Time.time + _blinkInterval;
+                _blinkCounter++;
+                if (_blinkCounter == _blinkCount)
+                {
+                    _damaged = false;
+                    _blinkCounter = 0f;
+                }
+            }               
         }
     }
 }
