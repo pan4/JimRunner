@@ -8,7 +8,12 @@ namespace JimRunner
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.name == "SpawnLocation")
+            if (other.gameObject.name == "PlatformSpawnLocation")
+            {
+                Destroy(other.gameObject.transform.parent.gameObject);
+            }
+
+            if (other.gameObject.name == "MainCloudSpawnLocation")
             {
                 Destroy(other.gameObject.transform.parent.gameObject);
             }
