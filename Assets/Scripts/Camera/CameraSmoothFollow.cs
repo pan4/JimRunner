@@ -17,7 +17,7 @@ namespace JimRunner
         private float lookAheadReturnSpeed = 0.5f;
         [SerializeField]
         private float lookAheadMoveThreshold = 0.1f;
-        
+
 
 
         private float m_OffsetZ;

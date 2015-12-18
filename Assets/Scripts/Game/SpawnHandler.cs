@@ -32,7 +32,7 @@ namespace JimRunner
 
                 GameObject obj = Instantiate(mainClouds, spawnLocation.position, Quaternion.identity) as GameObject;
                 obj.name = "SpawnedMainCloud";
-                var root = stage.transform.parent;
+                var root = stage.transform.parent.transform.parent;
                 obj.transform.parent = root;
             }
         }
