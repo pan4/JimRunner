@@ -38,7 +38,7 @@ namespace JimRunner
         private void Update()
         {
             // only update lookahead pos if accelerating or changed direction
-            float xMoveDelta = (target.position + offset - m_LastTargetPosition).x;
+            float xMoveDelta = (target.position + /*offset*/ - m_LastTargetPosition).x;
 
             bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
 
@@ -51,12 +51,12 @@ namespace JimRunner
                 m_LookAheadPos = Vector3.MoveTowards(m_LookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);
             }
 
-            Vector3 aheadTargetPos = target.position + offset + m_LookAheadPos + Vector3.forward * m_OffsetZ;
+            Vector3 aheadTargetPos = target.position + offset + m_LookAheadPos /*+ Vector3.forward * m_OffsetZ*/;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
 
-            transform.position = newPos;
+            transform.position = new Vector3(newPos.x, Mathf.Clamp(newPos.y, 3f, 4.2f), newPos.z);
 
-            m_LastTargetPosition = target.position + offset;
+            m_LastTargetPosition = target.position /*+ offset*/;
         }
     }
 }

@@ -5,8 +5,8 @@ namespace JimRunner
 {
     public class StoneController : MonoBehaviour
     {
-        [SerializeField]
-        Transform _rotation;
+        //[SerializeField]
+        //Transform _rotation;
 
         [SerializeField]
         Transform _shadow;
@@ -22,7 +22,7 @@ namespace JimRunner
         void Start()
         {
             _transform = transform;
-            CircleCollider2D circleCollider = _rotation.GetComponent<CircleCollider2D>();
+            CircleCollider2D circleCollider = _transform.GetComponent<CircleCollider2D>();
             _rotateSpeed = (360 * _speed) / (2 * Mathf.PI * circleCollider.radius * circleCollider.transform.localScale.x);
             _shadowOffset = _shadow.localPosition; 
         }
@@ -31,9 +31,14 @@ namespace JimRunner
         {
             //Debug.Log(_rotateSpeed);
             //_transform.Translate(new Vector3(-_speed * Time.deltaTime, 0f, 0f), Space.World);
-            _rotation.Rotate(0f, 0f, _rotateSpeed * Time.deltaTime);
-            _rotation.Translate(new Vector3(-_speed * Time.deltaTime, 0f, 0f), Space.World);
-            _shadow.position = _rotation.position + _shadowOffset;
+            _transform.Rotate(0f, 0f, _rotateSpeed * Time.deltaTime);
+            _transform.Translate(new Vector3(-_speed * Time.deltaTime, 0f, 0f), Space.World);
+            _shadow.position = _transform.position + _shadowOffset;
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(_transform.parent.gameObject);
         }
 
     }
