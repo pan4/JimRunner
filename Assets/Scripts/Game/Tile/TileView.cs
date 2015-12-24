@@ -17,5 +17,11 @@ namespace JimRunner.Tile
             SpawnLocation = Transform.Find("SpawnLocation").gameObject;
         }
 
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+
+        }
+
     }
 }

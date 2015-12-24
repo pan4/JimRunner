@@ -38,14 +38,17 @@ namespace JimRunner
         private GameObject lastClouds;
         private GameObject lastSecondRocks;
 
-        protected override void OnCreate()
+        protected override void OnEnabled()
         {
-            base.OnCreate();
-            TileGroundView [] groundsOnScene = FindObjectsOfType<TileGroundView>();
+            base.OnEnabled();
+
+            lastGrounds.Clear();
+            TileGroundView[] groundsOnScene = FindObjectsOfType<TileGroundView>();
             groundsOnScene.OrderBy(ground => ground.Transform.position.x);
             foreach (var ground in groundsOnScene)
                 if (!ground.IsUsed)
                     lastGrounds.Enqueue(ground.GameObject);
+
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -58,8 +61,15 @@ namespace JimRunner
 
                 if (other.gameObject.tag == "PlatformSpawnTrigger")
                 {
-                    if(lastGrounds.Count != 0)
-                        lastGrounds.Dequeue().GetComponent<TileView>().IsUsed = true;
+                    //if (stage.transform.parent.GetComponent<TileView>().IsUsed)
+                    //    return;
+
+                    if (lastGrounds.Count != 0)
+                    {
+                        GameObject lastGround = lastGrounds.Dequeue();
+                       // if(lastGround != null )
+                            lastGround.GetComponent<TileView>().IsUsed = true;
+                    }
                     lastGrounds.Enqueue(SpawnTile(groundCollection[(Random.Range(0, groundCollection.Length))], spawnLocation, "Ground", root));
                 }
                 else if (other.gameObject.tag == "MainCloudSpawnTrigger")
@@ -103,10 +113,16 @@ namespace JimRunner
         protected override void OnDisabled()
         {
             base.OnDisabled();
-            GameObject lastGround = lastGrounds.Dequeue();
-            lastGround.GetComponent<TileView>().IsUsed = true;
-            Transform spawnLocation = lastGround.transform.Find(SpawnLocation);
-            SpawnTile(transitionGround, spawnLocation, "Ground", lastGround.transform.parent);
+            if (lastGrounds.Count != 0)
+            {
+                GameObject lastGround = lastGrounds.Dequeue();
+                if (lastGround != null)
+                {
+                    lastGround.GetComponent<TileView>().IsUsed = true;
+                    Transform spawnLocation = lastGround.transform.Find(SpawnLocation);
+                    SpawnTile(transitionGround, spawnLocation, "Ground", lastGround.transform.parent);
+                }
+            }
         }
     }
 }
