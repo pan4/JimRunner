@@ -89,6 +89,8 @@ namespace JimRunner
         protected override void OnDisabled()
         {
             base.OnDisabled();
+            Transform spawnLocation = lastGround.transform.Find(SpawnLocation);
+            SpawnTile(transitionGround, spawnLocation, "Ground", lastGround.transform.parent);
         }
 
     }
