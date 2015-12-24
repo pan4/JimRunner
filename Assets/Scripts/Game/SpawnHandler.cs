@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using Core;
+using JimRunner.Tile;
+using System.Linq;
 
 namespace JimRunner
 {
@@ -30,11 +32,21 @@ namespace JimRunner
         [SerializeField]
         private GameObject transitionSecondRocks;
 
-        private GameObject lastGround;
+        private Queue<GameObject> lastGrounds = new Queue<GameObject>();
         private GameObject lastMainClouds;
         private GameObject lastFirstRock;
         private GameObject lastClouds;
         private GameObject lastSecondRocks;
+
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            TileGroundView [] groundsOnScene = FindObjectsOfType<TileGroundView>();
+            groundsOnScene.OrderBy(ground => ground.Transform.position.x);
+            foreach (var ground in groundsOnScene)
+                if (!ground.IsUsed)
+                    lastGrounds.Enqueue(ground.GameObject);
+        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -46,7 +58,9 @@ namespace JimRunner
 
                 if (other.gameObject.tag == "PlatformSpawnTrigger")
                 {
-                    lastGround = SpawnTile(groundCollection[(Random.Range(0, groundCollection.Length))], spawnLocation, "Ground", root);
+                    if(lastGrounds.Count != 0)
+                        lastGrounds.Dequeue().GetComponent<TileView>().IsUsed = true;
+                    lastGrounds.Enqueue(SpawnTile(groundCollection[(Random.Range(0, groundCollection.Length))], spawnLocation, "Ground", root));
                 }
                 else if (other.gameObject.tag == "MainCloudSpawnTrigger")
                 {
@@ -89,9 +103,10 @@ namespace JimRunner
         protected override void OnDisabled()
         {
             base.OnDisabled();
+            GameObject lastGround = lastGrounds.Dequeue();
+            lastGround.GetComponent<TileView>().IsUsed = true;
             Transform spawnLocation = lastGround.transform.Find(SpawnLocation);
             SpawnTile(transitionGround, spawnLocation, "Ground", lastGround.transform.parent);
         }
-
     }
 }
