@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core;
 using JimRunner.Tile;
 using System.Linq;
+using System;
 
 namespace JimRunner
 {
@@ -32,63 +33,104 @@ namespace JimRunner
         [SerializeField]
         private GameObject transitionSecondRocks;
 
-        private Queue<GameObject> lastGrounds = new Queue<GameObject>();
-        private GameObject lastMainClouds;
-        private GameObject lastFirstRock;
-        private GameObject lastClouds;
-        private GameObject lastSecondRocks;
+        private Queue<GameObject> unusedGrounds = new Queue<GameObject>();
+        private Queue<GameObject> unusedMainClouds = new Queue<GameObject>();
+        private Queue<GameObject> unusedFirstRock = new Queue<GameObject>();
+        private Queue<GameObject> unusedClouds = new Queue<GameObject>();
+        private Queue<GameObject> unusedSecondRocks = new Queue<GameObject>();
 
         protected override void OnEnabled()
         {
             base.OnEnabled();
 
-            lastGrounds.Clear();
-            TileGroundView[] groundsOnScene = FindObjectsOfType<TileGroundView>();
-            groundsOnScene = groundsOnScene.OrderBy(ground => ground.Transform.position.x).ToArray();
-            foreach (var ground in groundsOnScene)
-                if (!ground.IsUsed)
-                    lastGrounds.Enqueue(ground.GameObject);
+            Clear();
 
+            TileGroundController[] groundsOnScene = FindObjectsOfType<TileGroundController>();
+            InitTileQueue(unusedGrounds, groundsOnScene);
+
+            TileMainCloudController[] mainGloudsOnScene = FindObjectsOfType<TileMainCloudController>();
+            InitTileQueue(unusedMainClouds, mainGloudsOnScene);
+
+            TileFirstRockController[] firstRockOnScene = FindObjectsOfType<TileFirstRockController>();
+            InitTileQueue(unusedFirstRock, firstRockOnScene);
+
+            TileCloudController[] cloudsOnScene = FindObjectsOfType<TileCloudController>();
+            InitTileQueue(unusedClouds, cloudsOnScene);
+
+            TileSecondRockController[] secondRocksOnScene = FindObjectsOfType<TileSecondRockController>();
+            InitTileQueue(unusedSecondRocks, secondRocksOnScene);
+        }
+
+        private void Clear()
+        {
+            unusedGrounds.Clear();
+            unusedMainClouds.Clear();
+            unusedFirstRock.Clear();
+            unusedClouds.Clear();
+            unusedSecondRocks.Clear();
+        }
+
+        private void InitTileQueue(Queue<GameObject> queue,  TileController[] arr) 
+        {
+            arr = arr.OrderBy(tile => tile.Transform.position.x).ToArray();
+            foreach (var tile in arr)
+                if (!tile.IsUsed)
+                    queue.Enqueue(tile.GameObject);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if(IsCorrectTag(other.gameObject.tag))
             {
-                var stage = other.gameObject;
-                var root = stage.transform.parent.transform.parent;
-                Transform spawnLocation = stage.transform.parent.Find(SpawnLocation);
+                GameObject tile = other.gameObject;
+                TileController tileController = tile.transform.parent.GetComponent<TileController>();
+                if (tileController.IsUsed)
+                    return;
+
+                Transform root = tileController.Transform.parent;
 
                 if (other.gameObject.tag == "PlatformSpawnTrigger")
                 {
-                    if (stage.transform.parent.GetComponent<TileView>().IsUsed)
-                        return;
-
-                    if (lastGrounds.Count != 0)
-                    {
-                        GameObject lastGround = lastGrounds.Dequeue();
-                        if(lastGround != null )
-                            lastGround.GetComponent<TileView>().IsUsed = true;
-                    }
-                    lastGrounds.Enqueue(SpawnTile(groundCollection[(Random.Range(0, groundCollection.Length))], spawnLocation, "Ground", root));
+                    DequeueUsedTile(unusedGrounds);
+                    GameObject ground = groundCollection[(UnityEngine.Random.Range(0, groundCollection.Length))];
+                    unusedGrounds.Enqueue(SpawnTile(ground, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
                 else if (other.gameObject.tag == "MainCloudSpawnTrigger")
                 {
-                    lastMainClouds = SpawnTile(mainClouds, spawnLocation, "MainCloud", root);
+                    DequeueUsedTile(unusedMainClouds);
+                    unusedMainClouds.Enqueue(SpawnTile(mainClouds, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
                 else if (other.gameObject.tag == "FirstRockSpawnTrigger")
                 {
-                    lastFirstRock = SpawnTile(firstRock, spawnLocation, "FirstRock", root);
+                    DequeueUsedTile(unusedFirstRock);
+                    unusedFirstRock.Enqueue(SpawnTile(firstRock, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
                 else if (other.gameObject.tag == "CloudSpawnTrigger")
                 {
-                    lastClouds = SpawnTile(clouds, spawnLocation, "Cloud", root);
+                    DequeueUsedTile(unusedClouds);
+                    unusedClouds.Enqueue(SpawnTile(clouds, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
                 else if (other.gameObject.tag == "SecondRockSpawnTrigger")
                 {
-                    lastSecondRocks = SpawnTile(secondRocks, spawnLocation, "SecondRock", root);
+                    DequeueUsedTile(unusedSecondRocks);
+                    unusedSecondRocks.Enqueue(SpawnTile(secondRocks, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
             }            
+        }
+
+        private TileController DequeueUsedTile(Queue<GameObject> queue)
+        {
+            if (queue.Count != 0)
+            {
+                GameObject due = queue.Dequeue();
+                if (due != null)
+                {
+                    TileController controller = due.GetComponent<TileController>();
+                    controller.GetComponent<TileController>().IsUsed = true;
+                    return controller;
+                }
+            }
+            return null;
         }
 
         private bool IsCorrectTag(string tag)
@@ -113,16 +155,27 @@ namespace JimRunner
         protected override void OnDisabled()
         {
             base.OnDisabled();
-            if (lastGrounds.Count != 0)
-            {
-                GameObject lastGround = lastGrounds.Dequeue();
-                if (lastGround != null)
-                {
-                    lastGround.GetComponent<TileView>().IsUsed = true;
-                    Transform spawnLocation = lastGround.transform.Find(SpawnLocation);
-                    SpawnTile(transitionGround, spawnLocation, "Ground", lastGround.transform.parent);
-                }
-            }
+
+            TileController controller =  DequeueUsedTile(unusedGrounds);
+            if (controller != null)
+                SpawnTile(transitionGround, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+
+            controller = DequeueUsedTile(unusedClouds);
+            if (controller != null)
+                SpawnTile(transitionClouds, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+
+            controller = DequeueUsedTile(unusedFirstRock);
+            if (controller != null)
+                SpawnTile(transitionFirstRock, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+
+            controller = DequeueUsedTile(unusedMainClouds);
+            if (controller != null)
+                SpawnTile(transitionMainClouds, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+
+            controller = DequeueUsedTile(unusedSecondRocks);
+            if (controller != null)
+                SpawnTile(transitionSecondRocks, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+
         }
     }
 }

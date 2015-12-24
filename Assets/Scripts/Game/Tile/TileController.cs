@@ -4,17 +4,25 @@ using Core;
 
 namespace JimRunner.Tile
 {
-    public class TileView : BaseMonoBehaviour
+    public class TileController : BaseMonoBehaviour
     {
         public GameObject SpawnTrigger;
-        public GameObject SpawnLocation;
+        public Transform SpawnLocation;
         public bool IsUsed = false;
+
+        public virtual string GameObjectName
+        {
+            get
+            {
+                return "Tile";
+            }
+        }
 
         protected override void OnCreate()
         {
             base.OnCreate();
             SpawnTrigger = Transform.Find("SpawnTrigger").gameObject;
-            SpawnLocation = Transform.Find("SpawnLocation").gameObject;
+            SpawnLocation = Transform.Find("SpawnLocation").gameObject.transform;
         }
 
         protected override void OnDestroyed()
