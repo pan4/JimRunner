@@ -44,7 +44,7 @@ namespace JimRunner
 
             lastGrounds.Clear();
             TileGroundView[] groundsOnScene = FindObjectsOfType<TileGroundView>();
-            groundsOnScene.OrderBy(ground => ground.Transform.position.x);
+            groundsOnScene = groundsOnScene.OrderBy(ground => ground.Transform.position.x).ToArray();
             foreach (var ground in groundsOnScene)
                 if (!ground.IsUsed)
                     lastGrounds.Enqueue(ground.GameObject);
@@ -61,13 +61,13 @@ namespace JimRunner
 
                 if (other.gameObject.tag == "PlatformSpawnTrigger")
                 {
-                    //if (stage.transform.parent.GetComponent<TileView>().IsUsed)
-                    //    return;
+                    if (stage.transform.parent.GetComponent<TileView>().IsUsed)
+                        return;
 
                     if (lastGrounds.Count != 0)
                     {
                         GameObject lastGround = lastGrounds.Dequeue();
-                       // if(lastGround != null )
+                        if(lastGround != null )
                             lastGround.GetComponent<TileView>().IsUsed = true;
                     }
                     lastGrounds.Enqueue(SpawnTile(groundCollection[(Random.Range(0, groundCollection.Length))], spawnLocation, "Ground", root));
