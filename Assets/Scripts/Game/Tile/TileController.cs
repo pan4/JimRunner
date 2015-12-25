@@ -18,9 +18,9 @@ namespace JimRunner.Tile
             }
         }
 
-        protected override void OnCreate()
+        protected override void OnStart()
         {
-            base.OnCreate();
+            base.OnStart();
             SpawnTrigger = Transform.Find("SpawnTrigger").gameObject;
             SpawnLocation = Transform.Find("SpawnLocation").gameObject.transform;
         }
@@ -28,7 +28,6 @@ namespace JimRunner.Tile
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-
         }
 
     }
