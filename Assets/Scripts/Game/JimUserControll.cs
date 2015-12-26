@@ -32,7 +32,8 @@ namespace JimRunner
             // Read the inputs.
             bool crouch = Input.GetKey(KeyCode.LeftControl);
             // Pass all parameters to the character control script.
-            m_Character.Move(crouch, m_Jump);
+            if(Time.time > 2f)
+                m_Character.Move(crouch, m_Jump);
             m_Jump = false;
         }
     }
