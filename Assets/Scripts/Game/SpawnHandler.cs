@@ -9,35 +9,38 @@ namespace JimRunner
 {
     public class SpawnHandler : BaseMonoBehaviour
     {
-        private const string SpawnLocation = "SpawnLocation";
-
         [SerializeField]
         private GameObject[] groundCollection;
         [SerializeField]
-        private GameObject mainClouds;
+        private GameObject mainCloud;
         [SerializeField]
         private GameObject firstRock;
         [SerializeField]
-        private GameObject clouds;
+        private GameObject cloud;
         [SerializeField]
-        private GameObject secondRocks;
+        private GameObject secondRock;
+        [SerializeField]
+        private GameObject sky;
 
         [SerializeField]
         private GameObject transitionGround;
         [SerializeField]
-        private GameObject transitionMainClouds;
+        private GameObject transitionMainCloud;
         [SerializeField]
         private GameObject transitionFirstRock;
         [SerializeField]
-        private GameObject transitionClouds;
+        private GameObject transitionCloud;
         [SerializeField]
-        private GameObject transitionSecondRocks;
+        private GameObject transitionSecondRock;
+        [SerializeField]
+        private GameObject transitionSky;
 
         private Queue<GameObject> unusedGrounds = new Queue<GameObject>();
         private Queue<GameObject> unusedMainClouds = new Queue<GameObject>();
         private Queue<GameObject> unusedFirstRock = new Queue<GameObject>();
         private Queue<GameObject> unusedClouds = new Queue<GameObject>();
         private Queue<GameObject> unusedSecondRocks = new Queue<GameObject>();
+        private Queue<GameObject> unusedSkies = new Queue<GameObject>();
 
         protected override void OnEnabled()
         {
@@ -59,6 +62,9 @@ namespace JimRunner
 
             TileSecondRockController[] secondRocksOnScene = FindObjectsOfType<TileSecondRockController>();
             InitTileQueue(unusedSecondRocks, secondRocksOnScene);
+
+            TileSkyController[] skiesOnScene = FindObjectsOfType<TileSkyController>();
+            InitTileQueue(unusedSkies, skiesOnScene);
         }
 
         private void Clear()
@@ -68,6 +74,7 @@ namespace JimRunner
             unusedFirstRock.Clear();
             unusedClouds.Clear();
             unusedSecondRocks.Clear();
+            unusedSkies.Clear();
         }
 
         private void InitTileQueue(Queue<GameObject> queue,  TileController[] arr) 
@@ -98,7 +105,7 @@ namespace JimRunner
                 else if (other.gameObject.tag == "MainCloudSpawnTrigger")
                 {
                     DequeueUsedTile(unusedMainClouds);
-                    unusedMainClouds.Enqueue(SpawnTile(mainClouds, tileController.SpawnLocation, tileController.GameObjectName, root));
+                    unusedMainClouds.Enqueue(SpawnTile(mainCloud, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
                 else if (other.gameObject.tag == "FirstRockSpawnTrigger")
                 {
@@ -108,13 +115,19 @@ namespace JimRunner
                 else if (other.gameObject.tag == "CloudSpawnTrigger")
                 {
                     DequeueUsedTile(unusedClouds);
-                    unusedClouds.Enqueue(SpawnTile(clouds, tileController.SpawnLocation, tileController.GameObjectName, root));
+                    unusedClouds.Enqueue(SpawnTile(cloud, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
                 else if (other.gameObject.tag == "SecondRockSpawnTrigger")
                 {
                     DequeueUsedTile(unusedSecondRocks);
-                    unusedSecondRocks.Enqueue(SpawnTile(secondRocks, tileController.SpawnLocation, tileController.GameObjectName, root));
+                    unusedSecondRocks.Enqueue(SpawnTile(secondRock, tileController.SpawnLocation, tileController.GameObjectName, root));
                 }
+                else if (other.gameObject.tag == "SkySpawnTrigger")
+                {
+                    DequeueUsedTile(unusedSkies);
+                    unusedSkies.Enqueue(SpawnTile(sky, tileController.SpawnLocation, tileController.GameObjectName, root));
+                }
+
             }            
         }
 
@@ -139,7 +152,9 @@ namespace JimRunner
                 tag == "MainCloudSpawnTrigger" ||
                 tag == "FirstRockSpawnTrigger" ||
                 tag == "CloudSpawnTrigger" ||
-                tag == "SecondRockSpawnTrigger")
+                tag == "SecondRockSpawnTrigger" ||
+                tag == "SkySpawnTrigger")
+
                 return true;
             return false;
         }
@@ -162,7 +177,7 @@ namespace JimRunner
 
             controller = DequeueUsedTile(unusedClouds);
             if (controller != null)
-                SpawnTile(transitionClouds, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                SpawnTile(transitionCloud, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
             controller = DequeueUsedTile(unusedFirstRock);
             if (controller != null)
@@ -170,11 +185,15 @@ namespace JimRunner
 
             controller = DequeueUsedTile(unusedMainClouds);
             if (controller != null)
-                SpawnTile(transitionMainClouds, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                SpawnTile(transitionMainCloud, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
             controller = DequeueUsedTile(unusedSecondRocks);
             if (controller != null)
-                SpawnTile(transitionSecondRocks, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                SpawnTile(transitionSecondRock, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+
+            controller = DequeueUsedTile(unusedSkies);
+            if (controller != null)
+                SpawnTile(transitionSky, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
         }
     }
