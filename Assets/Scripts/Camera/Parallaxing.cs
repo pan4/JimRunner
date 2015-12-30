@@ -34,7 +34,7 @@ public class Parallaxing : MonoBehaviour {
 		// for each background
 		for (int i = 0; i < backgrounds.Length; i++) {
 			// the parallax is the opposite of the camera movement because the previous frame multiplied by the scale
-			float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i];
+			float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i] / (Time.deltaTime * 60);
 
 			// set a target x position which is the current position plus the parallax
 			float backgroundTargetPosX = backgrounds[i].position.x + parallax;
