@@ -171,29 +171,35 @@ namespace JimRunner
         {
             base.OnDisabled();
 
+            TransitionController tc = FindObjectOfType<TransitionController>();
+            if (tc == null)
+                return;
+
             TileController controller =  DequeueUsedTile(unusedGrounds);
             if (controller != null)
                 SpawnTile(transitionGround, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
             controller = DequeueUsedTile(unusedClouds);
             if (controller != null)
-                SpawnTile(transitionCloud, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                 tc.transitionCloud = SpawnTile(transitionCloud, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
             controller = DequeueUsedTile(unusedFirstRock);
             if (controller != null)
-                SpawnTile(transitionFirstRock, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                tc.transitionFirstRock = SpawnTile(transitionFirstRock, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
             controller = DequeueUsedTile(unusedMainClouds);
             if (controller != null)
-                SpawnTile(transitionMainCloud, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                tc.transitionMainCloud = SpawnTile(transitionMainCloud, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
             controller = DequeueUsedTile(unusedSecondRocks);
             if (controller != null)
-                SpawnTile(transitionSecondRock, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                tc.transitionSecondRock = SpawnTile(transitionSecondRock, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
             controller = DequeueUsedTile(unusedSkies);
             if (controller != null)
-                SpawnTile(transitionSky, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+                tc.transitionSky = SpawnTile(transitionSky, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
+
+            tc.enabled = true;
 
         }
     }

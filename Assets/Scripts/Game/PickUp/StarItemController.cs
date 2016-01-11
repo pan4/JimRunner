@@ -8,17 +8,15 @@ namespace JimRunner.Game.PickUp
         private float _amplitude = 1f;
 
         [SerializeField]
-        private float _speed = 1f;
+        private float _period = 1f;
 
         private float _time;
         private float _startPos_y;
-        private float _endPos_y;
 
         protected override void OnStart()
         {
             base.OnStart();
             _startPos_y = Transform.position.y;
-            _endPos_y = _startPos_y + _amplitude;
             _time = 0;
         }
 
@@ -26,8 +24,8 @@ namespace JimRunner.Game.PickUp
         {
             base.OnUpdate();
 
-            Transform.position = new Vector3(Transform.position.x, (float)BackEaseInOut(_time, _startPos_y, _endPos_y, _speed), Transform.position.z);
-            _time = Mathf.PingPong(Time.time, _speed);
+            Transform.position = new Vector3(Transform.position.x, (float)BackEaseInOut(_time, _startPos_y, _amplitude, _period), Transform.position.z);
+            _time = Mathf.PingPong(Time.time, _period);
         }
 
         /// <summary>
