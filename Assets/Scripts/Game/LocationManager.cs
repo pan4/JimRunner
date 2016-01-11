@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace JimRunner
 {
@@ -19,8 +20,13 @@ namespace JimRunner
             }
         }
 
+        [SerializeField]
+        private float _transitionDelay = 3f;
+
         private float _nextLocation;
         private int _index = 0;
+
+        TransitionController _transitionController;
 
         private void Awake()
         {
@@ -28,7 +34,8 @@ namespace JimRunner
                 locatin.SetActive(false);
 
             UpdateLocation(_index);
-            _nextLocation = Time.time + LocationSpan;
+
+            _transitionController = FindObjectOfType<TransitionController>();
         } 
 
         void Update()
@@ -44,6 +51,7 @@ namespace JimRunner
 
         private void UpdateLocation(int index)
         {
+
             if (index < 0 || index >= _locationSpawners.Length)
                 return;
 
@@ -53,6 +61,17 @@ namespace JimRunner
                 _locationSpawners[_locationSpawners.Length - 1].SetActive(false);
 
             _locationSpawners[index].SetActive(true);
+                        
+            StartCoroutine(StartTransition());
+
+            _nextLocation = Time.time + LocationSpan;
+        }
+
+        private IEnumerator StartTransition()
+        {
+            yield return new WaitForSeconds(_transitionDelay);
+            if(Time.timeSinceLevelLoad > LocationSpan)
+                _transitionController.enabled = true;
         }
     }
 }

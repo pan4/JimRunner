@@ -199,7 +199,7 @@ namespace JimRunner
             if (controller != null)
                 tc.transitionSky = SpawnTile(transitionSky, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
 
-            tc.enabled = true;
+            //tc.enabled = true;
 
         }
     }
