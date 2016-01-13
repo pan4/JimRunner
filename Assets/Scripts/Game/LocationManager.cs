@@ -27,6 +27,7 @@ namespace JimRunner
         private int _index = 0;
 
         TransitionController _transitionController;
+        CameraFade _cameraFade;
 
         private void Awake()
         {
@@ -36,6 +37,7 @@ namespace JimRunner
             UpdateLocation(_index);
 
             _transitionController = FindObjectOfType<TransitionController>();
+            _cameraFade = Camera.main.GetComponent<CameraFade>();
         } 
 
         void Update()
@@ -70,8 +72,11 @@ namespace JimRunner
         private IEnumerator StartTransition()
         {
             yield return new WaitForSeconds(_transitionDelay);
-            if(Time.timeSinceLevelLoad > LocationSpan)
+            if (Time.timeSinceLevelLoad > LocationSpan)
+            {
                 _transitionController.enabled = true;
+                _cameraFade.StartFade(new Color(0, 0, 0, 0), 1f, 1f, 1f);
+            }
         }
     }
 }
