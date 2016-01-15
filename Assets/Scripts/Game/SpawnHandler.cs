@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core;
 using JimRunner.Tile;
 using System.Linq;
-using System;
 
 namespace JimRunner
 {
@@ -198,9 +197,6 @@ namespace JimRunner
             controller = DequeueUsedTile(unusedSkies);
             if (controller != null)
                 tc.transitionSky = SpawnTile(transitionSky, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
-
-            //tc.enabled = true;
-
         }
     }
 }

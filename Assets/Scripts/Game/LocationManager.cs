@@ -12,13 +12,6 @@ namespace JimRunner
 
         [SerializeField]
         private float _locationSpan = 3;
-        private float LocationSpan
-        {
-            get
-            {
-                return _locationSpan * 60f;
-            }
-        }
 
         [SerializeField]
         private float _transitionDelay = 3f;
@@ -28,6 +21,7 @@ namespace JimRunner
 
         TransitionController _transitionController;
         CameraFade _cameraFade;
+        Flash _flash;
 
         private void Awake()
         {
@@ -38,6 +32,7 @@ namespace JimRunner
 
             _transitionController = FindObjectOfType<TransitionController>();
             _cameraFade = Camera.main.GetComponent<CameraFade>();
+            _flash = FindObjectOfType<Flash>();
         } 
 
         void Update()
@@ -47,7 +42,7 @@ namespace JimRunner
                 _index = ++_index % _locationSpawners.Length ;
                 
                 UpdateLocation(_index);
-                _nextLocation = Time.time + LocationSpan;
+                _nextLocation = Time.time + _locationSpan;
             }
         }
 
@@ -66,13 +61,13 @@ namespace JimRunner
                         
             StartCoroutine(StartTransition());
 
-            _nextLocation = Time.time + LocationSpan;
+            _nextLocation = Time.time + _locationSpan;
         }
 
         private IEnumerator StartTransition()
         {
             yield return new WaitForSeconds(_transitionDelay);
-            if (Time.timeSinceLevelLoad > LocationSpan)
+            if (Time.timeSinceLevelLoad > _locationSpan)
             {
                 _transitionController.enabled = true;
                 _cameraFade.StartFade(new Color(0, 0, 0, 0), 1f, 1f, 1f);

@@ -38,7 +38,7 @@ namespace JimRunner.Game.PickUp
         /// <param name="d">Duration of animation.</param>
         /// <returns>The correct value.</returns>
 
-        public static double BackEaseInOut(double t, double b, double c, double d)
+        private double BackEaseInOut(double t, double b, double c, double d)
         {
             double s = 1.70158;
             if ((t /= d / 2) < 1)
