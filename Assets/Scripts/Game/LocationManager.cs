@@ -21,7 +21,6 @@ namespace JimRunner
 
         TransitionController _transitionController;
         CameraFade _cameraFade;
-        Flash _flash;
 
         private void Awake()
         {
@@ -32,7 +31,6 @@ namespace JimRunner
 
             _transitionController = FindObjectOfType<TransitionController>();
             _cameraFade = Camera.main.GetComponent<CameraFade>();
-            _flash = FindObjectOfType<Flash>();
         } 
 
         void Update()
