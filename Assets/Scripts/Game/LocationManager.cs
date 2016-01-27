@@ -8,7 +8,7 @@ namespace JimRunner
     {
 
         [SerializeField]
-        private GameObject [] _locationSpawners;
+        private SpawnHandler [] _locationSpawners;
 
         [SerializeField]
         private float _locationSpan = 3;
@@ -24,10 +24,11 @@ namespace JimRunner
 
         private void Awake()
         {
-            foreach (var locatin in _locationSpawners)
-                locatin.SetActive(false);
+            //foreach (var locatin in _locationSpawners)
+            //locatin.SetActive(false);
 
-            UpdateLocation(_index);
+            //UpdateLocation(_index);
+            _nextLocation = Time.time + _locationSpan;
 
             _transitionController = FindObjectOfType<TransitionController>();
             _cameraFade = Camera.main.GetComponent<CameraFade>();
@@ -50,14 +51,19 @@ namespace JimRunner
             if (index < 0 || index >= _locationSpawners.Length)
                 return;
 
-            if (index != 0)
-                _locationSpawners[index - 1].SetActive(false);
-            else
-                _locationSpawners[_locationSpawners.Length - 1].SetActive(false);
+            //if (index != 0)
+            //    _locationSpawners[index - 1].SetActive(false);
+            //else
+            //    _locationSpawners[_locationSpawners.Length - 1].SetActive(false);
 
-            _locationSpawners[index].SetActive(true);
-                        
-            StartCoroutine(StartTransition());
+            if (index != 0)
+                _locationSpawners[index - 1].SetTransparency();
+            else
+                _locationSpawners[_locationSpawners.Length - 1].SetTransparency();
+
+            //_locationSpawners[index].SetActive(true);
+
+            //StartCoroutine(StartTransition());
 
             _nextLocation = Time.time + _locationSpan;
         }

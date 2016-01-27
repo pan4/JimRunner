@@ -198,5 +198,18 @@ namespace JimRunner
             if (controller != null)
                 tc.transitionSky = SpawnTile(transitionSky, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent);
         }
+
+        public void SetTransparency()
+        {
+            SpriteRenderer[] allTile = FindObjectsOfType<SpriteRenderer>();
+            IEnumerable<SpriteRenderer> dayTile = allTile.Where(tile => tile.gameObject.layer == LayerMask.NameToLayer("Day"));
+            foreach(SpriteRenderer r in dayTile)
+            {
+                Color c = r.color;
+                c.a = 0;
+                r.color = c;
+            }
+        }
+
     }
 }
