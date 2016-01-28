@@ -37,45 +37,34 @@ namespace JimRunner
         void Update()
         {
             if(_nextLocation < Time.time)
-            {
-                _index = ++_index % _locationSpawners.Length ;
-                
+            {                
                 UpdateLocation(_index);
+                _index = ++_index % _locationSpawners.Length;
                 _nextLocation = Time.time + _locationSpan;
             }
         }
 
         private void UpdateLocation(int index)
         {
-
-            if (index < 0 || index >= _locationSpawners.Length)
-                return;
-
-            //if (index != 0)
-            //    _locationSpawners[index - 1].SetActive(false);
-            //else
-            //    _locationSpawners[_locationSpawners.Length - 1].SetActive(false);
-
-            if (index != 0)
-                _locationSpawners[index - 1].SetTransparency();
-            else
-                _locationSpawners[_locationSpawners.Length - 1].SetTransparency();
-
-            //_locationSpawners[index].SetActive(true);
-
-            //StartCoroutine(StartTransition());
-
-            _nextLocation = Time.time + _locationSpan;
+            _locationSpawners[index].TileTransitonGround();
+            StartCoroutine(StartTransition(index));
         }
 
-        private IEnumerator StartTransition()
+        private IEnumerator StartTransition(int index)
         {
             yield return new WaitForSeconds(_transitionDelay);
-            if (Time.timeSinceLevelLoad > _locationSpan)
+            //if (Time.timeSinceLevelLoad > _locationSpan)
+            //{
+            //    _transitionController.enabled = true;
+            //    _cameraFade.StartFade(new Color(0, 0, 0, 0), 1f, 1f, 1f);
+            //}
+            if (!(index < 0 || index >= _locationSpawners.Length))
             {
-                _transitionController.enabled = true;
-                _cameraFade.StartFade(new Color(0, 0, 0, 0), 1f, 1f, 1f);
+                _locationSpawners[index].SetTransparency();
+
+                _nextLocation = Time.time + _locationSpan;
             }
+
         }
     }
 }
