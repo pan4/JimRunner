@@ -18,11 +18,14 @@ namespace JimRunner.Tile
             }
         }
 
+        public SpriteRenderer SpriteRenderer;
+
         protected override void OnCreate()
         {
             base.OnCreate();
             SpawnTrigger = Transform.Find("SpawnTrigger").gameObject;
             SpawnLocation = Transform.Find("SpawnLocation").gameObject.transform;
+            SpriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         protected override void OnDestroyed()

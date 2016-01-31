@@ -8,24 +8,9 @@ namespace JimRunner
 {
     public class SpawnHandler : BaseMonoBehaviour
     {
-        [SerializeField]
-        private GameObject[] groundCollection;
-
-        private int _groundIndex = 0;
-
-        [SerializeField]
-        private GameObject[] mainCloud;
-        [SerializeField]
-        private GameObject[] firstRock;
-        [SerializeField]
-        private GameObject[] cloud;
-        [SerializeField]
-        private GameObject[] secondRock;
-        [SerializeField]
-        private GameObject[] sky;
-
-        [SerializeField]
-        private GameObject[] transitionGrounds;
+        IEnumerable<TileController> _disappearedTile;
+        bool _transparencyInProgress;
+        float _alpha = 1f;
 
         private Queue<GameObject> unusedGrounds = new Queue<GameObject>();
 
@@ -33,15 +18,8 @@ namespace JimRunner
         {
             base.OnEnabled();
 
-            Clear();
-
             TileGroundController[] groundsOnScene = FindObjectsOfType<TileGroundController>();
             InitTileQueue(unusedGrounds, groundsOnScene);
-        }
-
-        private void Clear()
-        {
-            unusedGrounds.Clear();
         }
 
         private void InitTileQueue(Queue<GameObject> queue,  TileController[] arr) 
@@ -66,33 +44,34 @@ namespace JimRunner
                 if (other.gameObject.tag == "PlatformSpawnTrigger")
                 {
                     DequeueUsedTile(unusedGrounds);
-                    GameObject ground = groundCollection[_groundIndex];
+                    int index = Random.Range(0, GameFactory.GetGroundsCount());
+                    GameObject ground = GameFactory.GetGround(index);
                     unusedGrounds.Enqueue(SpawnTile(ground, tileController.SpawnLocation, tileController.GameObjectName, root));                    
                 }
                 else if (other.gameObject.tag == "MainCloudSpawnTrigger")
                 {
-                    foreach (GameObject mc in mainCloud)
-                        SpawnTile(mc, tileController.SpawnLocation, tileController.GameObjectName, root);
+                    GameObject mc = GameFactory.GetMainCloud();
+                    SpawnTile(mc, tileController.SpawnLocation, tileController.GameObjectName, root);
                 }
                 else if (other.gameObject.tag == "FirstRockSpawnTrigger")
                 {
-                    foreach (GameObject fr in firstRock)
-                        SpawnTile(fr, tileController.SpawnLocation, tileController.GameObjectName, root);
+                    GameObject fr = GameFactory.GetFirstRock();
+                    SpawnTile(fr, tileController.SpawnLocation, tileController.GameObjectName, root);
                 }
                 else if (other.gameObject.tag == "CloudSpawnTrigger")
                 {
-                    foreach (GameObject c in cloud)
-                        SpawnTile(c, tileController.SpawnLocation, tileController.GameObjectName, root);
+                    GameObject c = GameFactory.GetCloud();
+                    SpawnTile(c, tileController.SpawnLocation, tileController.GameObjectName, root);
                 }
                 else if (other.gameObject.tag == "SecondRockSpawnTrigger")
                 {
-                    foreach (GameObject sr in secondRock)
-                        SpawnTile(sr, tileController.SpawnLocation, tileController.GameObjectName, root);
+                    GameObject sr = GameFactory.GetSecondRock();
+                    SpawnTile(sr, tileController.SpawnLocation, tileController.GameObjectName, root);
                 }
                 else if (other.gameObject.tag == "SkySpawnTrigger")
                 {
-                    foreach (GameObject s in sky)
-                        SpawnTile(s, tileController.SpawnLocation, tileController.GameObjectName, root);
+                    GameObject s = GameFactory.GetSky();
+                    SpawnTile(s, tileController.SpawnLocation, tileController.GameObjectName, root);
                 }
 
             }            
@@ -134,47 +113,69 @@ namespace JimRunner
             return obj;
         }
 
-        IEnumerable<SpriteRenderer> _dayTile;
-        bool _transparencyInProgress;
-        float _alpha = 1f;
-         
         public void SetTransparency()
         {
             _transparencyInProgress = true;
-            SpriteRenderer[] allTile = FindObjectsOfType<SpriteRenderer>();
-            _dayTile = allTile.Where(
+            TileController[] allTile = FindObjectsOfType<TileController>();
+            int disappearedLayer = LayerMask.NameToLayer(LocationManager.PrevioustLocation.ToString());
+            _disappearedTile = allTile.Where(
                 (tile) => 
                 {
                     if (tile != null)
-                        return tile.gameObject.layer == LayerMask.NameToLayer("Day");
+                        return tile.GameObject.layer == disappearedLayer;
                     return false; 
                 }
             );
+            foreach (TileController tc in _disappearedTile)
+                tc.SpriteRenderer.sortingOrder = tc.SpriteRenderer.sortingOrder + 1;
+
+            LocationManager.PrevioustLocation = LocationManager.CurrentLocation;
+
+            foreach (TileController c in _disappearedTile)
+            {
+                if (c is TileMainCloudController)
+                    SpawnTile(GameFactory.GetMainCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
+                else if (c is TileCloudController)
+                    SpawnTile(GameFactory.GetCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
+                else if (c is TileFirstRockController)
+                    SpawnTile(GameFactory.GetFirstRock(), c.Transform, c.GameObjectName, c.Transform.parent);
+                else if (c is TileSecondRockController)
+                    SpawnTile(GameFactory.GetSecondRock(), c.Transform, c.GameObjectName, c.Transform.parent);
+                else if (c is TileSkyController)
+                    SpawnTile(GameFactory.GetSky(), c.Transform, c.GameObjectName, c.Transform.parent);
+            }
         }
 
-        public void TileTransitonGround()
+        public void SpawnTransitionGround(LocationType type)
         {
-            _groundIndex++;
             TileController controller = DequeueUsedTile(unusedGrounds);
             if (controller != null)
-                unusedGrounds.Enqueue(SpawnTile(transitionGrounds[_groundIndex], controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent));
+            {
+                GameObject tg = GameFactory.GetTransitionGround((int)LocationManager.CurrentLocation);
+                unusedGrounds.Enqueue(SpawnTile(tg, controller.SpawnLocation, controller.GameObjectName, controller.Transform.parent));
+            }
         }
 
         private void Update()
         {
             if(_transparencyInProgress)
             {
-                foreach (SpriteRenderer r in _dayTile)
+                foreach (TileController tc in _disappearedTile)
                 {
-                    if (r != null)
+                    if (tc != null)
                     {
-                        Color c = r.color;
-                        c.a = _alpha;
-                        r.color = c;
+                        if (_alpha > 0)
+                        {
+                            Color c = tc.SpriteRenderer.color;
+                            c.a = _alpha;
+                            tc.SpriteRenderer.color = c;
+                        }
+                        else
+                            Destroy(tc.GameObject);
                     }
                 }
 
-                if (_alpha == 0)
+                if (_alpha <= 0)
                 {
                     _alpha = 1f;
                     _transparencyInProgress = false;
