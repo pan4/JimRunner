@@ -38,6 +38,8 @@ namespace JimRunner
                 TileController tileController = tile.transform.parent.GetComponent<TileController>();
                 if (tileController.IsUsed)
                     return;
+                else
+                    tileController.IsUsed = true;
 
                 Transform root = tileController.Transform.parent;
 
@@ -137,16 +139,25 @@ namespace JimRunner
 
             foreach (TileController c in _disappearedTile)
             {
+                GameObject spawnedTile = null;
+
                 if (c is TileMainCloudController)
-                    SpawnTile(GameFactory.GetMainCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
+                    spawnedTile = SpawnTile(GameFactory.GetMainCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
                 else if (c is TileCloudController)
-                    SpawnTile(GameFactory.GetCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
+                    spawnedTile = SpawnTile(GameFactory.GetCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
                 else if (c is TileFirstRockController)
-                    SpawnTile(GameFactory.GetFirstRock(), c.Transform, c.GameObjectName, c.Transform.parent);
+                    spawnedTile = SpawnTile(GameFactory.GetFirstRock(), c.Transform, c.GameObjectName, c.Transform.parent);
                 else if (c is TileSecondRockController)
-                    SpawnTile(GameFactory.GetSecondRock(), c.Transform, c.GameObjectName, c.Transform.parent);
+                    spawnedTile = SpawnTile(GameFactory.GetSecondRock(), c.Transform, c.GameObjectName, c.Transform.parent);
                 else if (c is TileSkyController)
-                    SpawnTile(GameFactory.GetSky(), c.Transform, c.GameObjectName, c.Transform.parent);
+                    spawnedTile = SpawnTile(GameFactory.GetSky(), c.Transform, c.GameObjectName, c.Transform.parent);
+
+                if (spawnedTile != null && c.IsUsed)
+                {
+                    TileController tc = spawnedTile.GetComponent<TileController>();
+                    if (tc != null)
+                        Destroy(tc.SpawnTrigger.gameObject);
+                }
             }
         }
 
@@ -184,7 +195,7 @@ namespace JimRunner
                     _alpha = 1f;
                     _transparencyInProgress = false;
                 }
-                _alpha -= 0.005f;
+                _alpha -= 0.33f * Time.deltaTime;
             }
         }
 
