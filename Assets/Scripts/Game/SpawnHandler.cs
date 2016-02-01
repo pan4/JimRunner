@@ -127,7 +127,11 @@ namespace JimRunner
                 }
             );
             foreach (TileController tc in _disappearedTile)
+            {
                 tc.SpriteRenderer.sortingOrder = tc.SpriteRenderer.sortingOrder + 1;
+                Destroy(tc.SpawnTrigger.gameObject);
+                Destroy(tc.SpawnLocation.gameObject);
+            }
 
             LocationManager.PrevioustLocation = LocationManager.CurrentLocation;
 
