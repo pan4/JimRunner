@@ -8,8 +8,8 @@ namespace JimRunner
     {
         Day,
         Evening,
-        Size,
         Night,
+        Size,
         Winter,
 
         Transition
@@ -62,7 +62,7 @@ namespace JimRunner
         void Update()
         {
             if(_nextLocation < Time.time)
-            {                
+            {
                 StartNewLocation(_index);
                 _index = ++_index % (int)LocationType.Size;
                 _nextLocation = Time.time + _locationSpan;
