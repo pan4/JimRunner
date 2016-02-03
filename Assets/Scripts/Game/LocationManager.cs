@@ -9,9 +9,8 @@ namespace JimRunner
         Day,
         Evening,
         Night,
-        Size,
         Winter,
-
+        Size,
         Transition
     }
 

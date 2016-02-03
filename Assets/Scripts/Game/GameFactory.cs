@@ -94,6 +94,13 @@ namespace JimRunner
             _stringResourcesPath.Add("SecondRock" + LocationType.Night, string.Format(baseNightBackGroundsPath, "SecondRock"));
             _stringResourcesPath.Add("Sky" + LocationType.Night, string.Format(baseNightBackGroundsPath, "Sky"));
 
+            string baseWinterBackGroundsPath = "Prefabs/Winter/BackGround/{0}";
+            _stringResourcesPath.Add("MainCloud" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "MainCloud"));
+            _stringResourcesPath.Add("Cloud" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "Cloud"));
+            _stringResourcesPath.Add("FirstRock" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "FirstRock"));
+            _stringResourcesPath.Add("SecondRock" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "SecondRock"));
+            _stringResourcesPath.Add("Sky" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "Sky"));
+
             string baseTransitionGroundsPath = "Prefabs/TransitionGrounds/TransitionGround{0}";
             for (int i = 0; i < (int)LocationType.Size; i++)
                 _stringResourcesPath.Add("TransitionGround" + i.ToString(), string.Format(baseTransitionGroundsPath, i.ToString()));
