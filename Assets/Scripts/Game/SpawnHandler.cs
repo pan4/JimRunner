@@ -9,6 +9,7 @@ namespace JimRunner
     public class SpawnHandler : BaseMonoBehaviour
     {
         IEnumerable<TileController> _disappearedTile;
+        List<TileController> _appearedTile = new List<TileController>();
         bool _transparencyInProgress;
         float _alpha = 1f;
 
@@ -137,26 +138,36 @@ namespace JimRunner
 
             LocationManager.PrevioustLocation = LocationManager.CurrentLocation;
 
-            foreach (TileController c in _disappearedTile)
+            foreach (TileController disappered in _disappearedTile)
             {
                 GameObject spawnedTile = null;
 
-                if (c is TileMainCloudController)
-                    spawnedTile = SpawnTile(GameFactory.GetMainCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
-                else if (c is TileCloudController)
-                    spawnedTile = SpawnTile(GameFactory.GetCloud(), c.Transform, c.GameObjectName, c.Transform.parent);
-                else if (c is TileFirstRockController)
-                    spawnedTile = SpawnTile(GameFactory.GetFirstRock(), c.Transform, c.GameObjectName, c.Transform.parent);
-                else if (c is TileSecondRockController)
-                    spawnedTile = SpawnTile(GameFactory.GetSecondRock(), c.Transform, c.GameObjectName, c.Transform.parent);
-                else if (c is TileSkyController)
-                    spawnedTile = SpawnTile(GameFactory.GetSky(), c.Transform, c.GameObjectName, c.Transform.parent);
+                if (disappered is TileMainCloudController)
+                    spawnedTile = SpawnTile(GameFactory.GetMainCloud(), disappered.Transform, disappered.GameObjectName, disappered.Transform.parent);
+                else if (disappered is TileCloudController)
+                    spawnedTile = SpawnTile(GameFactory.GetCloud(), disappered.Transform, disappered.GameObjectName, disappered.Transform.parent);
+                else if (disappered is TileFirstRockController)
+                    spawnedTile = SpawnTile(GameFactory.GetFirstRock(), disappered.Transform, disappered.GameObjectName, disappered.Transform.parent);
+                else if (disappered is TileSecondRockController)
+                    spawnedTile = SpawnTile(GameFactory.GetSecondRock(), disappered.Transform, disappered.GameObjectName, disappered.Transform.parent);
+                else if (disappered is TileSkyController)
+                    spawnedTile = SpawnTile(GameFactory.GetSky(), disappered.Transform, disappered.GameObjectName, disappered.Transform.parent);
 
-                if (spawnedTile != null && c.IsUsed)
+                if (spawnedTile != null)
                 {
-                    TileController tc = spawnedTile.GetComponent<TileController>();
-                    if (tc != null)
-                        Destroy(tc.SpawnTrigger.gameObject);
+                    TileController appered = spawnedTile.GetComponent<TileController>();
+
+                    if (appered != null)
+                    {
+                        _appearedTile.Add(appered);
+
+                        Color color = appered.SpriteRenderer.color;
+                        color.a = 0;
+                        appered.SpriteRenderer.color = color;
+
+                        if (disappered.IsUsed)
+                            Destroy(appered.SpawnTrigger.gameObject);
+                    }
                 }
             }
         }
@@ -190,10 +201,26 @@ namespace JimRunner
                     }
                 }
 
+                foreach (TileController tc in _appearedTile)
+                {
+                    if (tc != null)
+                    {
+                        if (_alpha > 0)
+                        {
+                            Color c = tc.SpriteRenderer.color;
+                            c.a = 1 - _alpha;
+                            tc.SpriteRenderer.color = c;
+                        }
+                    }
+                }
+
+
+
                 if (_alpha <= 0)
                 {
                     _alpha = 1f;
                     _transparencyInProgress = false;
+                    _appearedTile.Clear();
                 }
                 _alpha -= 0.33f * Time.deltaTime;
             }

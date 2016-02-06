@@ -1,0 +1,485 @@
+fileFormatVersion: 2
+guid: e2b737e7913289b4f98be833e993b53f
+timeCreated: 1454705943
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 01-Jump-norm_0
+    21300002: 01-Jump-norm_1
+    21300004: 01-Jump-norm_2
+    21300006: 01-Jump-norm_3
+    21300008: 01-Jump-norm_4
+    21300010: 01-Jump-norm_5
+    21300012: 01-Jump-norm_6
+    21300014: 01-Jump-norm_7
+    21300016: 01-Jump-norm_8
+    21300018: 01-Jump-norm_9
+    21300020: 01-Jump-norm_10
+    21300022: 01-Jump-norm_11
+    21300024: 01-Jump-norm_12
+    21300026: 01-Jump-norm_13
+    21300028: 01-Jump-norm_14
+    21300030: 01-Jump-norm_15
+    21300032: 01-Jump-norm_16
+    21300034: 01-Jump-norm_17
+    21300036: 01-Jump-norm_18
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 200
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: 01-Jump-norm_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 15.557003, y: 78.5}
+        - {x: -42.442997, y: 78.5}
+        - {x: -53.442997, y: 44.5}
+        - {x: -53.442997, y: -19.5}
+        - {x: -29.442997, y: -75.5}
+        - {x: 10.557003, y: -75.5}
+        - {x: 54.557003, y: -19.5}
+        - {x: 54.557003, y: 27.5}
+        - {x: 46.557003, y: 65.5}
+    - name: 01-Jump-norm_1
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 32.45114, y: 66.5}
+        - {x: -0.54885864, y: 78.5}
+        - {x: -42.54886, y: 78.5}
+        - {x: -53.54886, y: 64.5}
+        - {x: -53.54886, y: -73.5}
+        - {x: -52.54886, y: -78.5}
+        - {x: 14.451141, y: -78.5}
+        - {x: 55.45114, y: -19.5}
+        - {x: 55.45114, y: 16.5}
+        - {x: 49.45114, y: 43.5}
+    - name: 01-Jump-norm_2
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -40.654724, y: 75.5}
+        - {x: -53.654724, y: 49.5}
+        - {x: -53.654724, y: -34.5}
+        - {x: -38.654724, y: -68.5}
+        - {x: -31.654724, y: -78.5}
+        - {x: -4.654724, y: -78.5}
+        - {x: 18.345276, y: -71.5}
+        - {x: 54.345276, y: -41.5}
+        - {x: 54.345276, y: 62.5}
+        - {x: 16.345276, y: 75.5}
+    - name: 01-Jump-norm_3
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38.76059, y: 73.5}
+        - {x: -53.76059, y: 30.5}
+        - {x: -53.76059, y: -33.5}
+        - {x: -45.76059, y: -68.5}
+        - {x: -33.76059, y: -78.5}
+        - {x: -9.76059, y: -78.5}
+        - {x: 23.23941, y: -72.5}
+        - {x: 55.23941, y: -31.5}
+        - {x: 55.23941, y: 30.5}
+        - {x: 34.23941, y: 73.5}
+    - name: 01-Jump-norm_4
+      rect:
+        serializedVersion: 2
+        x: 845
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 54.133545, y: 30.5}
+        - {x: 36.133545, y: 71.5}
+        - {x: -53.866455, y: 71.5}
+        - {x: -53.866455, y: -74.5}
+        - {x: -32.866455, y: -74.5}
+        - {x: -22.866455, y: -71.5}
+        - {x: -0.8664551, y: -74.5}
+        - {x: 5.133545, y: -74.5}
+        - {x: 22.133545, y: -65.5}
+        - {x: 54.133545, y: -30.5}
+    - name: 01-Jump-norm_5
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -53.47235, y: 71.5}
+        - {x: -53.47235, y: -71.5}
+        - {x: 27.527649, y: -71.5}
+        - {x: 54.52765, y: -34.5}
+        - {x: 54.52765, y: 25.5}
+        - {x: 35.52765, y: 71.5}
+      - - {x: 51.52765, y: -56.5}
+        - {x: 53.52765, y: -58.5}
+        - {x: 54.52765, y: -58.5}
+        - {x: 54.52765, y: -50.5}
+        - {x: 51.52765, y: -51.5}
+    - name: 01-Jump-norm_6
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38.578186, y: 71.5}
+        - {x: -44.578186, y: 67.5}
+        - {x: -51.578186, y: 34.5}
+        - {x: -53.578186, y: 15.5}
+        - {x: -53.578186, y: 2.5}
+        - {x: -47.578186, y: -0.5}
+        - {x: -53.578186, y: -15.5}
+        - {x: -53.578186, y: -70.5}
+        - {x: 23.421814, y: -70.5}
+        - {x: 41.421814, y: -63.5}
+        - {x: 55.421814, y: -41.5}
+        - {x: 55.421814, y: 42.5}
+        - {x: 26.421814, y: 71.5}
+    - name: 01-Jump-norm_7
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -52.684082, y: 71.5}
+        - {x: -52.684082, y: -78.5}
+        - {x: 16.315918, y: -78.5}
+        - {x: 37.315918, y: -65.5}
+        - {x: 54.315918, y: -40.5}
+        - {x: 54.315918, y: 41.5}
+        - {x: 44.315918, y: 71.5}
+    - name: 01-Jump-norm_8
+      rect:
+        serializedVersion: 2
+        x: 1685
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -52.789917, y: 71.5}
+        - {x: -52.789917, y: -54.5}
+        - {x: -29.789917, y: -78.5}
+        - {x: 37.210083, y: -78.5}
+        - {x: 50.210083, y: -73.5}
+        - {x: 55.210083, y: -39.5}
+        - {x: 55.210083, y: 56.5}
+        - {x: 24.210083, y: 71.5}
+    - name: 01-Jump-norm_9
+      rect:
+        serializedVersion: 2
+        x: 1895
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -36.895813, y: 71.5}
+        - {x: -40.895813, y: 62.5}
+        - {x: -52.895813, y: 36.5}
+        - {x: -52.895813, y: -48.5}
+        - {x: -50.895813, y: -60.5}
+        - {x: -37.895813, y: -71.5}
+        - {x: 27.104187, y: -71.5}
+        - {x: 54.104187, y: -43.5}
+        - {x: 54.104187, y: 53.5}
+        - {x: 12.104187, y: 71.5}
+    - name: 01-Jump-norm_10
+      rect:
+        serializedVersion: 2
+        x: 2105
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -48.50171, y: 71.5}
+        - {x: -52.50171, y: 65.5}
+        - {x: -52.50171, y: -64.5}
+        - {x: -41.50171, y: -72.5}
+        - {x: 22.498291, y: -72.5}
+        - {x: 54.49829, y: -36.5}
+        - {x: 54.49829, y: 58.5}
+        - {x: 22.498291, y: 71.5}
+    - name: 01-Jump-norm_11
+      rect:
+        serializedVersion: 2
+        x: 2315
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -51.607544, y: 71.5}
+        - {x: -51.607544, y: -32.5}
+        - {x: -23.607544, y: -72.5}
+        - {x: 46.392456, y: -72.5}
+        - {x: 55.392456, y: -27.5}
+        - {x: 55.392456, y: 53.5}
+        - {x: 40.392456, y: 71.5}
+    - name: 01-Jump-norm_12
+      rect:
+        serializedVersion: 2
+        x: 2525
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30.713379, y: -73.5}
+        - {x: 23.286621, y: -73.5}
+        - {x: 54.28662, y: -43.5}
+        - {x: 54.28662, y: 55.5}
+        - {x: 46.28662, y: 71.5}
+        - {x: -52.71338, y: 71.5}
+        - {x: -52.71338, y: -53.5}
+    - name: 01-Jump-norm_13
+      rect:
+        serializedVersion: 2
+        x: 2735
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 41.180786, y: 58.5}
+        - {x: 4.180786, y: 71.5}
+        - {x: -33.819214, y: 71.5}
+        - {x: -51.819214, y: 49.5}
+        - {x: -51.819214, y: -58.5}
+        - {x: -50.819214, y: -64.5}
+        - {x: -23.819214, y: -73.5}
+        - {x: 20.180786, y: -73.5}
+        - {x: 55.180786, y: -21.5}
+        - {x: 55.180786, y: 23.5}
+        - {x: 52.180786, y: 32.5}
+      - - {x: -53.819214, y: -5.5}
+        - {x: -50.819214, y: -4.5}
+        - {x: -50.819214, y: 1.5}
+        - {x: -52.819214, y: 3.5}
+        - {x: -53.819214, y: 3.5}
+    - name: 01-Jump-norm_14
+      rect:
+        serializedVersion: 2
+        x: 2945
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9.074829, y: 71.5}
+        - {x: -52.92517, y: 71.5}
+        - {x: -52.92517, y: -74.5}
+        - {x: 18.07483, y: -74.5}
+        - {x: 54.07483, y: -26.5}
+        - {x: 54.07483, y: 38.5}
+        - {x: 52.07483, y: 46.5}
+    - name: 01-Jump-norm_15
+      rect:
+        serializedVersion: 2
+        x: 3155
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -44.531006, y: 73.5}
+        - {x: -51.531006, y: 50.5}
+        - {x: -51.531006, y: -37.5}
+        - {x: -32.531006, y: -74.5}
+        - {x: 26.468994, y: -74.5}
+        - {x: 54.468994, y: -53.5}
+        - {x: 54.468994, y: 65.5}
+        - {x: 52.468994, y: 73.5}
+      - - {x: -53.531006, y: -6.5}
+        - {x: -50.531006, y: -5.5}
+        - {x: -50.531006, y: 1.5}
+        - {x: -52.531006, y: 3.5}
+        - {x: -53.531006, y: 3.5}
+    - name: 01-Jump-norm_16
+      rect:
+        serializedVersion: 2
+        x: 3365
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13.363159, y: 75.5}
+        - {x: -42.63684, y: 75.5}
+        - {x: -51.63684, y: 39.5}
+        - {x: -51.63684, y: -27.5}
+        - {x: -43.63684, y: -57.5}
+        - {x: -12.636841, y: -75.5}
+        - {x: 20.36316, y: -75.5}
+        - {x: 55.36316, y: -22.5}
+        - {x: 55.36316, y: 23.5}
+        - {x: 44.36316, y: 67.5}
+      - - {x: -53.63684, y: -8.5}
+        - {x: -50.63684, y: -7.5}
+        - {x: -50.63684, y: 4.5}
+        - {x: -52.63684, y: 6.5}
+        - {x: -53.63684, y: 6.5}
+    - name: 01-Jump-norm_17
+      rect:
+        serializedVersion: 2
+        x: 3575
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 3.2573242, y: 78.5}
+        - {x: -30.742676, y: 78.5}
+        - {x: -51.742676, y: 58.5}
+        - {x: -51.742676, y: -41.5}
+        - {x: -50.742676, y: -48.5}
+        - {x: -11.742676, y: -75.5}
+        - {x: 6.257324, y: -75.5}
+        - {x: 10.257324, y: -74.5}
+        - {x: 54.257324, y: -22.5}
+        - {x: 54.257324, y: 25.5}
+        - {x: 47.257324, y: 54.5}
+      - - {x: -53.742676, y: -6.5}
+        - {x: -50.742676, y: -5.5}
+        - {x: -50.742676, y: 1.5}
+        - {x: -52.742676, y: 3.5}
+        - {x: -53.742676, y: 3.5}
+    - name: 01-Jump-norm_18
+      rect:
+        serializedVersion: 2
+        x: 3785
+        y: 0
+        width: 210
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30.151367, y: 78.5}
+        - {x: -51.848633, y: 78.5}
+        - {x: -51.848633, y: -73.5}
+        - {x: -38.848633, y: -75.5}
+        - {x: 18.151367, y: -75.5}
+        - {x: 55.151367, y: -26.5}
+        - {x: 55.151367, y: 25.5}
+        - {x: 47.151367, y: 50.5}
+      - - {x: -53.848633, y: -8.5}
+        - {x: -50.848633, y: -7.5}
+        - {x: -50.848633, y: 5.5}
+        - {x: -52.848633, y: 7.5}
+        - {x: -53.848633, y: 7.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

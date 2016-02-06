@@ -32,7 +32,8 @@ public class Parallaxing : MonoBehaviour {
 	void Update () {
 
 		// for each background
-		for (int i = 0; i < backgrounds.Length; i++) {
+		for (int i = 0; i < backgrounds.Length; i++)
+        {
 			// the parallax is the opposite of the camera movement because the previous frame multiplied by the scale
 			float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i] / (Time.deltaTime * 60);
 
