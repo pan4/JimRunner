@@ -113,7 +113,7 @@ namespace JimRunner
             //Debug.Log(m_Rigidbody2D.velocity.y);
         }
 
-
+        
         public void Move(bool crouch, bool jump)
         {
             // If crouching, check to see if the character can stand up
