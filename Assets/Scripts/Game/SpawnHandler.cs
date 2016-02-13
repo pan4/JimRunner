@@ -15,6 +15,13 @@ namespace JimRunner
 
         private Queue<GameObject> unusedGrounds = new Queue<GameObject>();
 
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            GameFactory.LoadAll();
+        }
+
+
         protected override void OnEnabled()
         {
             base.OnEnabled();

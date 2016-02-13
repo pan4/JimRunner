@@ -104,8 +104,11 @@ namespace JimRunner
             string baseTransitionGroundsPath = "Prefabs/TransitionGrounds/TransitionGround{0}";
             for (int i = 0; i < (int)LocationType.Size; i++)
                 _stringResourcesPath.Add("TransitionGround" + i.ToString(), string.Format(baseTransitionGroundsPath, i.ToString()));
+        }
 
-            foreach (string key in _stringResourcesPath.Values)
+        public static void LoadAll()
+        {
+            foreach (string key in _stringResourcesPath.Keys)
                 GetPrefab(key);
         }
 
