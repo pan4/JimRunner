@@ -69,11 +69,14 @@ namespace JimRunner
 
         private SpriteRenderer _spriteRenderer;
 
+        public Transform GroundColliders;
+
         private void Awake()
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
             m_CeilingCheck = transform.Find("CeilingCheck");
+            GroundColliders = transform.FindChild("GroundColliders");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -98,7 +101,7 @@ namespace JimRunner
 
             for (int i = 0; i < colliders.Length; i++)
             {
-                if (colliders[i].gameObject != gameObject)
+                if (colliders[i].gameObject != gameObject && colliders[i].transform != GroundColliders)
                 {
                     Grounded = true;
                     break;
