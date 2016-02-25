@@ -45,6 +45,22 @@ namespace JimRunner
             }
         }
 
+        private bool _onPit;
+        public bool OnPit
+        {
+            get
+            {
+                return _onPit;
+            }
+            set
+            {
+                if (value)
+                    Grounded = false;
+                _onPit = value;
+            }
+        }
+
+
         [SerializeField]
         private int jumpCount = 1;
 
@@ -94,26 +110,31 @@ namespace JimRunner
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-
-            if (colliders.Length == 0)
-                Grounded = false;
-
-            for (int i = 0; i < colliders.Length; i++)
+            if (!OnPit)
             {
-                if (colliders[i].gameObject != gameObject && colliders[i].transform != GroundColliders)
-                {
-                    Grounded = true;
-                    break;
-                }
-                if (i == (colliders.Length - 1))
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+
+                if (colliders.Length == 0)
                     Grounded = false;
+
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    if (colliders[i].gameObject != gameObject && colliders[i].transform != GroundColliders)
+                    {
+                        Grounded = true;
+                        break;
+                    }
+                    if (i == (colliders.Length - 1))
+                        Grounded = false;
+                }
             }
+
+
             m_Anim.SetBool("Ground", Grounded);
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-            //Debug.Log(m_Rigidbody2D.velocity.y);
+
         }
 
         

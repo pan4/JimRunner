@@ -24,7 +24,7 @@ namespace JimRunner
             _transform = transform;
             CircleCollider2D circleCollider = _transform.GetComponent<CircleCollider2D>();
             _rotationSpeed = (360 * _speed) / (2 * Mathf.PI * circleCollider.radius * circleCollider.transform.localScale.x);
-            _shadowOffset = _shadow.localPosition; 
+            _shadowOffset = _shadow.localPosition - _transform.localPosition;
         }
 
         private void Update()

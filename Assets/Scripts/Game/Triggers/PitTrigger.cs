@@ -13,7 +13,9 @@ namespace JimRunner.Triggers
         {
             if(collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                collider.GetComponent<JimController>().GroundColliders.gameObject.SetActive(false);
+                JimController jim = collider.GetComponent<JimController>();
+                jim.GroundColliders.gameObject.SetActive(false);
+                jim.OnPit = true;
             }
         }
 
@@ -21,7 +23,9 @@ namespace JimRunner.Triggers
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                collider.GetComponent<JimController>().GroundColliders.gameObject.SetActive(true);
+                JimController jim = collider.GetComponent<JimController>();
+                jim.GroundColliders.gameObject.SetActive(true);
+                jim.OnPit = false;
             }
         }
     }

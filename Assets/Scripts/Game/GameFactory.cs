@@ -38,72 +38,47 @@ namespace JimRunner
             _stringResourcesPath = new Dictionary<string, string>();
             _loadedPrefab = new Dictionary<string, UnityEngine.Object>();
 
-            //TileGroundController[] allGrounds = Resources.FindObjectsOfTypeAll<TileGroundController>();
-            //foreach(TileGroundController g in allGrounds)
-            //{
-            //    if (g.Type == LocationType.Day)
-            //        DayGroundsCount++;
-            //    else if (g.Type == LocationType.Evening)
-            //        EveningGroundsCount++;
-            //    else if (g.Type == LocationType.Night)
-            //        NightGroundsCount++;
-            //    else if (g.Type == LocationType.Winter)
-            //        WinterGroundsCount++;
-            //}
-
             DayGroundsCount = Resources.LoadAll<TileGroundController>("Prefabs/Day/Grounds").Length;
             EveningGroundsCount = Resources.LoadAll<TileGroundController>("Prefabs/Evening/Grounds").Length;
             NightGroundsCount = Resources.LoadAll<TileGroundController>("Prefabs/Night/Grounds").Length;
             WinterGroundsCount = Resources.LoadAll<TileGroundController>("Prefabs/Winter/Grounds").Length;
-
 
             string baseDayGroundsPath = "Prefabs/Day/Grounds/Ground{0}";
             for (int i = 0; i < DayGroundsCount; i++)
                 _stringResourcesPath.Add("Ground" + LocationType.Day + i.ToString(), string.Format(baseDayGroundsPath, i.ToString()));
 
             string baseEveningGroundsPath = "Prefabs/Evening/Grounds/Ground{0}";
-            for (int i = 0; i < DayGroundsCount; i++)
+            for (int i = 0; i < EveningGroundsCount; i++)
                 _stringResourcesPath.Add("Ground" + LocationType.Evening + i.ToString(), string.Format(baseEveningGroundsPath, i.ToString()));
 
             string baseNightGroundsPath = "Prefabs/Night/Grounds/Ground{0}";
-            for (int i = 0; i < DayGroundsCount; i++)
+            for (int i = 0; i < NightGroundsCount; i++)
                 _stringResourcesPath.Add("Ground" + LocationType.Night + i.ToString(), string.Format(baseNightGroundsPath, i.ToString()));
 
             string baseWinterGroundsPath = "Prefabs/Winter/Grounds/Ground{0}";
-            for (int i = 0; i < DayGroundsCount; i++)
+            for (int i = 0; i < WinterGroundsCount; i++)
                 _stringResourcesPath.Add("Ground" + LocationType.Winter + i.ToString(), string.Format(baseWinterGroundsPath, i.ToString()));
 
-            string baseDayBackGroundsPath = "Prefabs/Day/BackGround/{0}";
-            _stringResourcesPath.Add("MainCloud" + LocationType.Day, string.Format(baseDayBackGroundsPath, "MainCloud"));
-            _stringResourcesPath.Add("Cloud" + LocationType.Day, string.Format(baseDayBackGroundsPath, "Cloud"));
-            _stringResourcesPath.Add("FirstRock" + LocationType.Day, string.Format(baseDayBackGroundsPath, "FirstRock"));
-            _stringResourcesPath.Add("SecondRock" + LocationType.Day, string.Format(baseDayBackGroundsPath, "SecondRock"));
-            _stringResourcesPath.Add("Sky" + LocationType.Day, string.Format(baseDayBackGroundsPath, "Sky"));
-
-            string baseEveningBackGroundsPath = "Prefabs/Evening/BackGround/{0}";
-            _stringResourcesPath.Add("MainCloud" + LocationType.Evening, string.Format(baseEveningBackGroundsPath, "MainCloud"));
-            _stringResourcesPath.Add("Cloud" + LocationType.Evening, string.Format(baseEveningBackGroundsPath, "Cloud"));
-            _stringResourcesPath.Add("FirstRock" + LocationType.Evening, string.Format(baseEveningBackGroundsPath, "FirstRock"));
-            _stringResourcesPath.Add("SecondRock" + LocationType.Evening, string.Format(baseEveningBackGroundsPath, "SecondRock"));
-            _stringResourcesPath.Add("Sky" + LocationType.Evening, string.Format(baseEveningBackGroundsPath, "Sky"));
-
-            string baseNightBackGroundsPath = "Prefabs/Night/BackGround/{0}";
-            _stringResourcesPath.Add("MainCloud" + LocationType.Night, string.Format(baseNightBackGroundsPath, "MainCloud"));
-            _stringResourcesPath.Add("Cloud" + LocationType.Night, string.Format(baseNightBackGroundsPath, "Cloud"));
-            _stringResourcesPath.Add("FirstRock" + LocationType.Night, string.Format(baseNightBackGroundsPath, "FirstRock"));
-            _stringResourcesPath.Add("SecondRock" + LocationType.Night, string.Format(baseNightBackGroundsPath, "SecondRock"));
-            _stringResourcesPath.Add("Sky" + LocationType.Night, string.Format(baseNightBackGroundsPath, "Sky"));
-
-            string baseWinterBackGroundsPath = "Prefabs/Winter/BackGround/{0}";
-            _stringResourcesPath.Add("MainCloud" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "MainCloud"));
-            _stringResourcesPath.Add("Cloud" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "Cloud"));
-            _stringResourcesPath.Add("FirstRock" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "FirstRock"));
-            _stringResourcesPath.Add("SecondRock" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "SecondRock"));
-            _stringResourcesPath.Add("Sky" + LocationType.Winter, string.Format(baseWinterBackGroundsPath, "Sky"));
+            string baseBackGroundsPath = "Prefabs/{0}/BackGround/{1}";
+            for(int i = 0; i < (int)LocationType.Size; i++)
+            {
+                _stringResourcesPath.Add("MainCloud" + ((LocationType)i).ToString(), string.Format(baseBackGroundsPath, ((LocationType)i).ToString(), "MainCloud"));
+                _stringResourcesPath.Add("Cloud" + ((LocationType)i).ToString(), string.Format(baseBackGroundsPath, ((LocationType)i).ToString(), "Cloud"));
+                _stringResourcesPath.Add("FirstRock" + ((LocationType)i).ToString(), string.Format(baseBackGroundsPath, ((LocationType)i).ToString(), "FirstRock"));
+                _stringResourcesPath.Add("SecondRock" + ((LocationType)i).ToString(), string.Format(baseBackGroundsPath, ((LocationType)i).ToString(), "SecondRock"));
+                _stringResourcesPath.Add("Sky" + ((LocationType)i).ToString(), string.Format(baseBackGroundsPath, ((LocationType)i).ToString(), "Sky"));
+            }
 
             string baseTransitionGroundsPath = "Prefabs/TransitionGrounds/TransitionGround{0}";
             for (int i = 0; i < (int)LocationType.Size; i++)
                 _stringResourcesPath.Add("TransitionGround" + i.ToString(), string.Format(baseTransitionGroundsPath, i.ToString()));
+
+            string baseObstaclesPath = "Prefabs/{0}/Obstacles/{1}";
+            for (int i = 0; i < (int)LocationType.Size; i++)
+                for (int j = 0; j < (int)ObstacleType.Size; j++)
+                {
+                    _stringResourcesPath.Add(((ObstacleType)j).ToString() + ((LocationType)i).ToString(), string.Format(baseObstaclesPath, ((LocationType)i).ToString(), ((ObstacleType)j).ToString()));
+                }
         }
 
         public static void LoadAll()
@@ -139,7 +114,8 @@ namespace JimRunner
         public static GameObject GetGround(int index)
         {
             string key = "Ground" + LocationManager.CurrentLocation + index.ToString();
-            return GetPrefab(key) as GameObject;
+            GameObject result = GetPrefab(key) as GameObject;
+            return result;
         }
 
         public static GameObject GetMainCloud()
@@ -175,6 +151,12 @@ namespace JimRunner
         public static GameObject GetTransitionGround(int index)
         {
             string key = "TransitionGround" + index.ToString();
+            return GetPrefab(key) as GameObject;
+        }
+
+        public static GameObject GetObstacel(ObstacleType type)
+        {
+            string key = type.ToString() + LocationManager.CurrentLocation;
             return GetPrefab(key) as GameObject;
         }
 

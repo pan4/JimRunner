@@ -56,7 +56,15 @@ namespace JimRunner
                     DequeueUsedTile(unusedGrounds);
                     int index = Random.Range(0, GameFactory.GetGroundsCount());
                     GameObject ground = GameFactory.GetGround(index);
-                    unusedGrounds.Enqueue(SpawnTile(ground, tileController.SpawnLocation, tileController.GameObjectName, root));                    
+                    unusedGrounds.Enqueue(SpawnTile(ground, tileController.SpawnLocation, tileController.GameObjectName, root));
+
+                    index = Random.Range(0, (int)ObstacleType.Size);
+                    GameObject obstacle = GameFactory.GetObstacel((ObstacleType)index);
+                    GameObject obstacleClone = Instantiate(obstacle, tileController.SpawnLocation.position, Quaternion.identity) as GameObject;
+
+                    //Vector3 pos =  obstacleClone.transform.position;
+                    //pos.x = tileController.SpawnLocation.position.x;
+                    //obstacleClone.transform.position = pos;
                 }
                 else if (other.gameObject.tag == "MainCloudSpawnTrigger")
                 {
