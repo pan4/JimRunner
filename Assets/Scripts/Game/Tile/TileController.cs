@@ -9,6 +9,7 @@ namespace JimRunner.Tile
         public GameObject SpawnTrigger;
         public Transform SpawnLocation;
         public bool IsUsed = false;
+        public LocationType LocationType;
 
         public virtual string GameObjectName
         {
@@ -18,14 +19,11 @@ namespace JimRunner.Tile
             }
         }
 
-        public SpriteRenderer SpriteRenderer;
-
         protected override void OnCreate()
         {
             base.OnCreate();
             SpawnTrigger = Transform.Find("SpawnTrigger").gameObject;
             SpawnLocation = Transform.Find("SpawnLocation").gameObject.transform;
-            SpriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         protected override void OnDestroyed()

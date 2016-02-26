@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace JimRunner.Tile
 {
-    public class TileFirstRockController : TileController
+    public class TileFirstRockController : BackgroundTileController
     {
         public override string GameObjectName
         {

@@ -8,7 +8,7 @@ namespace JimRunner
 {
     public class SpawnHandler : BaseMonoBehaviour
     {
-        IEnumerable<TileController> _disappearedTile;
+        IEnumerable<BackgroundTileController> _disappearedTile;
         List<TileController> _appearedTile = new List<TileController>();
         bool _transparencyInProgress;
         float _alpha = 1f;
@@ -134,17 +134,17 @@ namespace JimRunner
         public void SetTransparency()
         {
             _transparencyInProgress = true;
-            TileController[] allTile = FindObjectsOfType<TileController>();
-            int disappearedLayer = LayerMask.NameToLayer(LocationManager.PrevioustLocation.ToString());
+            BackgroundTileController[] allTile = FindObjectsOfType<BackgroundTileController>();
+            LocationType disappearedLocation = LocationManager.PrevioustLocation;
             _disappearedTile = allTile.Where(
                 (tile) => 
                 {
                     if (tile != null)
-                        return tile.GameObject.layer == disappearedLayer;
+                        return tile.LocationType == disappearedLocation;
                     return false; 
                 }
             );
-            foreach (TileController tc in _disappearedTile)
+            foreach (BackgroundTileController tc in _disappearedTile)
             {
                 tc.SpriteRenderer.sortingOrder = tc.SpriteRenderer.sortingOrder + 1;
                 Destroy(tc.SpawnTrigger.gameObject);
@@ -153,7 +153,7 @@ namespace JimRunner
 
             LocationManager.PrevioustLocation = LocationManager.CurrentLocation;
 
-            foreach (TileController disappered in _disappearedTile)
+            foreach (BackgroundTileController disappered in _disappearedTile)
             {
                 GameObject spawnedTile = null;
 
@@ -170,7 +170,7 @@ namespace JimRunner
 
                 if (spawnedTile != null)
                 {
-                    TileController appered = spawnedTile.GetComponent<TileController>();
+                    BackgroundTileController appered = spawnedTile.GetComponent<BackgroundTileController>();
 
                     if (appered != null)
                     {
@@ -201,7 +201,7 @@ namespace JimRunner
         {
             if(_transparencyInProgress)
             {
-                foreach (TileController tc in _disappearedTile)
+                foreach (BackgroundTileController tc in _disappearedTile)
                 {
                     if (tc != null)
                     {
@@ -216,7 +216,7 @@ namespace JimRunner
                     }
                 }
 
-                foreach (TileController tc in _appearedTile)
+                foreach (BackgroundTileController tc in _appearedTile)
                 {
                     if (tc != null)
                     {
@@ -228,8 +228,6 @@ namespace JimRunner
                         }
                     }
                 }
-
-
 
                 if (_alpha <= 0)
                 {
