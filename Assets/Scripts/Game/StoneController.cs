@@ -1,43 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Core;
 
 namespace JimRunner
 {
-    public class StoneController : MonoBehaviour
+    public class StoneController : BaseMonoBehaviour
     {
-        //[SerializeField]
-        //Transform _rotation;
-
         [SerializeField]
         Transform _shadow;
-
-        Transform _transform;
 
         [SerializeField]
         float _speed;
 
-        private float _rotationSpeed;
+        protected float _rotationSpeed;
         private Vector3 _shadowOffset;
 
-        void Start()
+        protected override void OnStart()
         {
-            _transform = transform;
-            CircleCollider2D circleCollider = _transform.GetComponent<CircleCollider2D>();
+            base.OnStart();
+            CircleCollider2D circleCollider = Transform.GetComponent<CircleCollider2D>();
             _rotationSpeed = (360 * _speed) / (2 * Mathf.PI * circleCollider.radius * circleCollider.transform.localScale.x);
-            _shadowOffset = _shadow.localPosition - _transform.localPosition;
+            _shadowOffset = _shadow.localPosition - Transform.localPosition;
         }
 
-        private void Update()
+        protected override void OnUpdate()
         {
-            _transform.Rotate(0f, 0f, _rotationSpeed * Time.deltaTime);
-            _transform.Translate(new Vector3(-_speed * Time.deltaTime, 0f, 0f), Space.World);
-            _shadow.position = _transform.position + _shadowOffset;
+            base.OnUpdate();
+            Transform.Rotate(0f, 0f, _rotationSpeed * Time.deltaTime);
+            Transform.Translate(new Vector3(-_speed * Time.deltaTime, 0f, 0f), Space.World);
+            _shadow.position = Transform.position + _shadowOffset;
         }
 
-        private void OnDestroy()
+        protected override void OnDestroyed()
         {
-            Destroy(_transform.parent.gameObject);
+            base.OnDestroyed();
+            Destroy(Transform.parent.gameObject);
         }
+
 
     }
 }

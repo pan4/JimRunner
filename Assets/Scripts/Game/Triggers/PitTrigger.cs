@@ -18,10 +18,10 @@ namespace JimRunner.Triggers
                 jim.OnPit = true;
             }
 
-            //if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-            //{
-            //    collider.enabled = false;
-            //}
+            if (collider.gameObject.layer == LayerMask.NameToLayer("PitLayer"))
+            {
+                collider.transform.parent.GetComponent<Collider2D>().enabled = false;
+            }
         }
 
         private void OnTriggerExit2D(Collider2D collider)
@@ -33,10 +33,10 @@ namespace JimRunner.Triggers
                 jim.OnPit = false;
             }
 
-            //if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-            //{
-            //    collider.enabled = true;
-            //}
+            if (collider.gameObject.layer == LayerMask.NameToLayer("PitLayer"))
+            {
+                collider.transform.parent.GetComponent<Collider2D>().enabled = true;
+            }
         }
     }
 }
